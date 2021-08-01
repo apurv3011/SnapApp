@@ -2,9 +2,14 @@ let videoFeed = document.querySelector("video");
 let recordB =document.querySelector(".inner-record");
 let captureB = document.querySelector(".inner-capture");
 let filters = document.querySelectorAll(".filter");
+let zoomIn = document.querySelector(".zoomIn");
+let zoomOut = document.querySelector(".zoomOut");
 let recordingstate = false;
 let mediaRecorder;
 let filterSelected= "none";
+let maxZoom = 3;
+let minZoom = 1;
+let currZoom = 1;
 
 
 
@@ -65,6 +70,11 @@ let filterSelected= "none";
 
             let ctx = canvas.getContext("2d");
             ctx.drawImage(videoFeed , 0 , 0);
+
+            if(filterSelected != 'none'){
+                ctx.fillStyle = filterSelected;
+                ctx.fillRect(0 , 0 , canvas.width , canvas.height);
+            }
             let aTag = document.createElement("a");
             aTag.download = `Img-${Date.now()}.jpg`;
             aTag.href = canvas.toDataURL("image/jpg");
@@ -76,16 +86,52 @@ let filterSelected= "none";
 
 for (let filter = 0; filter < filters.length; filter++) {
     
-    const element = filters[filter];
+    let element = filters[filter];
     console.log(element);
     element.addEventListener("click" , function(e){
-        let currentfilterSelected = e.target.style.backgroundColor;
-        let filetrDiv = document.createElement("div");
-        filetrDiv.classList.add("filter-div");
-        filetrDiv.style.backgroundColor =currentfilterSelected;
-        filterSelected = currentfilterSelected;
+    let currentfilterSelected = e.target.style.backgroundColor;
 
+    if(filterSelected == ''){
+        // console.log(currentfilterSelected);
+    
+        if(document.querySelector(".filter-div")){
+            document.querySelector(".filter-div").remove();
+            filterSelected = "none";
+            return;
+        }
+    }
+    if(filterSelected == currentfilterSelected){
+        return;
+    }
+    let filetrDiv = document.createElement("div");
+    filetrDiv.classList.add("filter-div");
+    filetrDiv.style.backgroundColor =currentfilterSelected;
+    if(filterSelected == 'none'){
+        document.body.append(filetrDiv);
+    }else{
+        document.querySelector(".filter-div").remove();
+        document.body.append(filetrDiv);
+    }
+    filterSelected = currentfilterSelected;
 
     });
     
 }
+
+zoomIn.addEventListener("click" , function () {
+    if(currZoom + 0.1 > maxZoom){
+    return;
+}
+    console.log("apurv");
+
+    currZoom = currZoom +  0.1;
+    videoFeed.style.transform = `scale(${currZoom})`;
+});
+zoomOut.addEventListener("click" , function(){
+    if(currZoom - 0.1 < minZoom){
+    return;
+}
+console.log("apurv");
+currZoom = currZoom -  0.1;
+    videoFeed.style.transform = `scale(${currZoom})`;
+});

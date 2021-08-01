@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SnapApp</title>
     <link rel="stylesheet" href="./style.css" />
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
     <body>
         <div class="video-filters">
             <div style="background-color: rgb(255, 0, 0, 0.4);" class="filter one"></div>
@@ -19,9 +19,20 @@
 
         </div>
         <div class="video-container">
-            <video autoplay></video>
+            <video  autoplay ></video>
         </div>
         <div class="camera-button">
+            
+            <div class="zoom">
+                <div class="zoomIn">
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="zoomOut">
+                    <i class="fas fa-minus"></i>
+                </div>
+            </div>
+
+           
             <div id="record">
                 <div class="inner-record">
 
@@ -34,8 +45,7 @@
             </div>
 
         </div>
-        <!-- <div style="background-color: rgb(255, 0, 0, 0.4);" class="filter-div"> -->
-
+      
         </div>
     </body>
     <script src="script.js"></script>
